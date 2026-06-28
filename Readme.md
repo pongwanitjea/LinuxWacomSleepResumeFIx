@@ -5,7 +5,7 @@ Change 0003:056A:51DD to be your own by ls in /sys/bus/hid/drivers/wacom/
 
 ## systemd-sleep Hook: The Reliable Long-Term Fix
 
-Since every sysfs rebind attempt you've tried fails because the firmware is stuck, the correct approach is to **cut power to the device before suspend** so the firmware gets a proper reset on resume. This is the approach that worked for `bjgroom` on a similar Thinkpad Yoga with the same error.[^1_2]
+Since every sysfs rebind attempt you've tried fails because the firmware is stuck, the correct approach is to **cut power to the device before suspend** so the firmware gets a proper reset on resume. This is the approach that worked for `bjgroom` on a similar Thinkpad Yoga with the same error.
 
 ### Pre-suspend: Unbind the xHCI driver (force USB power cut)
 
@@ -42,6 +42,6 @@ esac
 sudo chmod +x /etc/systemd/system-sleep/wacom-reset
 ```
 
-The 3-second delay in `post_resume` is the key difference from your earlier failed `modprobe -r wacom; sleep 5; modprobe wacom` attempt — previously you likely ran that with the device already in a zombie state mid-session, not as a clean pre/post suspend hook.[^1_6][^1_7]
+The 3-second delay in `post_resume` is the key difference from your earlier failed `modprobe -r wacom; sleep 5; modprobe wacom` attempt — previously you likely ran that with the device already in a zombie state mid-session, not as a clean pre/post suspend hook.
 
 ***
