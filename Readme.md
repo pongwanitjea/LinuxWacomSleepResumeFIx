@@ -10,7 +10,7 @@ Since every sysfs rebind attempt you've tried fails because the firmware is stuc
 ### Pre-suspend: Unbind the xHCI driver (force USB power cut)
 
 ```bash
-sudo nano /etc/systemd/system-sleep/wacom-reset
+sudo nano /etc/systemd/system-sleep/wacom-reset.sh
 ```
 
 ```bash
@@ -39,7 +39,7 @@ esac
 ```
 
 ```bash
-sudo chmod +x /etc/systemd/system-sleep/wacom-reset
+sudo chmod +x /etc/systemd/system-sleep/wacom-reset.sh
 ```
 
 The 3-second delay in `post_resume` is the key difference from your earlier failed `modprobe -r wacom; sleep 5; modprobe wacom` attempt — previously you likely ran that with the device already in a zombie state mid-session, not as a clean pre/post suspend hook.
